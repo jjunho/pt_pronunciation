@@ -5,7 +5,7 @@ from functools import reduce
 from operator import add
 from glob import glob
 from pathlib import Path
-from lib import hangul
+from libs import hangul
 
 IN_DIR = "data/tsv"
 OUT_DIR = "data"
