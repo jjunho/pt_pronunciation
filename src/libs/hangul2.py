@@ -20,11 +20,11 @@ def mk_dict(s):
 
 
 YALE_CHO = mk_dict(
-    "k, kk, n, t, tt, l, m, p, pp, s, ss, ., c, cc, ch, kh, th, ph, h")
+    "k kk n t tt l m p pp s ss . c cc ch kh th ph h")
 YALE_JUNG = mk_dict(
-    "a, ay, ya, yay, e, ey, ye, yey, o, wa, way, oy, yo, wu, we, wey, wi, yu, u, uy, i")
+    "a ay ya yay e ey ye yey o wa way oy yo wu we wey wi yu u uy i")
 YALE_JONG = mk_dict(
-    "., k, kk, ks, n, nc, nh, t, l, lk, lm, lp, ls, lth, lph, lh, m, p, ps, s, ss, ng, c, ch, kh, th, ph, h")
+    ". k kk ks n nc nh t l lk lm lp ls lth lph lh m p ps s ss ng c ch kh th ph h")
 
 
 def get_yale_chojungjong(h):
