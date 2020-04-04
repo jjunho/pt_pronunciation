@@ -6,8 +6,9 @@ from glob import glob
 import os
 import pandas as pd
 
-IN_DIR = "data/xlsx"
-OUT_DIR = "data/tsv"
+IN_DIR = "data/00_original/xlsx"
+OUT_DIR = "data/01_process/tsv"
+
 
 if not os.path.exists(OUT_DIR):
     os.makedirs(OUT_DIR)
@@ -19,7 +20,7 @@ def xlsx2tsv(infile_path, outfile_path):
 
 
 def change_filename(infilename, outdir):
-    name, *_ = infilename.strip().split('_')
+    name = infilename.strip()
     clean_name = Path(name).stem
     return f"{outdir}/{clean_name}.tsv"
 

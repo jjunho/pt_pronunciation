@@ -1,8 +1,7 @@
 #! /bin/bash
 
 source ~/env/jupyter/bin/activate
-unzip -d data data/xlsx.zip
+unzip -d data/00_original data/00_original/xlsx.zip
 python src/process_xlsx.py
-rm -rf data/xlsx
+rm -rf data/00_original/xlsx
 python src/process_tsv.py
-rm -rf data/tsv
