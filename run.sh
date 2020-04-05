@@ -5,3 +5,5 @@ unzip -d data/00_original data/00_original/xlsx.zip
 python src/process_xlsx.py
 rm -rf data/00_original/xlsx
 python src/process_tsv.py
+rm -rf data/00_original/tsv
+python src/create_dataframe.py
