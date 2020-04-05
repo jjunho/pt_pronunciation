@@ -7,8 +7,8 @@ from glob import glob
 from pathlib import Path
 from libs import hangul
 
-IN_DIR = "data/01_process/tsv"
-OUT_DIR = "data/01_process"
+IN_DIR = "data/00_original/tsv"
+OUT_DIR = "data/00_original"
 
 DATA_FILES = sorted(f for f in glob(f"{IN_DIR}/*") if '.tsv' in f)
 

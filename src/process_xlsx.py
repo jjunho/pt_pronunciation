@@ -7,7 +7,7 @@ import os
 import pandas as pd
 
 IN_DIR = "data/00_original/xlsx"
-OUT_DIR = "data/01_process/tsv"
+OUT_DIR = "data/00_original/tsv"
 
 
 if not os.path.exists(OUT_DIR):
