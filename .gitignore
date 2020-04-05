@@ -133,3 +133,9 @@ VSCODE
 ######
 
 .vscode
+
+######
+Project
+######
+
+data/01_process/*
