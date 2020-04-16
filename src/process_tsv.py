@@ -6,15 +6,21 @@ from operator import add
 from glob import glob
 from pathlib import Path
 from libs import hangul
+import re
+import os
 
 IN_DIR = "data/00_original/tsv"
-OUT_DIR = "data/00_original"
+OUT_DIR = "data/01_process"
+
+if not os.path.exists(OUT_DIR):
+    os.makedirs(OUT_DIR)
 
 DATA_FILES = sorted(f for f in glob(f"{IN_DIR}/*") if '.tsv' in f)
 
 PT_WORDS = ["pais", "país", "vela", "bela", "ele", "ele (L)", "som", "são", "sábia", "sabia", "sabiá", "zelo", "gelo", "cara", "cala", "meu", "mel", "sou", "sol", "bolo", "bola", "líquido", "liquido", "liqüido", "pato", "topa",
             "tapioca", "China", "sina", "cheio", "seio", "quem", "vem", "alguém", "um", "dois", "ficar", "picar", "venha", "vênia", "cidade", "cidade (d)", "pacato", "batata", "mamata", "talento", "daquilo", "naquilo", "carroça", "gamela"]
 
+clean = re.compile(r'\.\(\..*$')
 
 def words_from(tsv_file):
     words = [line.strip().split('\t')[2:]
@@ -27,7 +33,7 @@ def make_table(tsv_file):
     name = Path(tsv_file).stem
     for pos, words in pos_words:
         for word in words:
-            yield [name, PT_WORDS[pos], word, hangul.yale(word), hangul.ipa(word)]
+            yield [name, PT_WORDS[pos], clean.sub('', word), hangul.yale(word), hangul.ipa(word)]
 
 
 data = "\n".join("\t".join(line) for line in reduce(
