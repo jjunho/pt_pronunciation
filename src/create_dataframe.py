@@ -1,7 +1,7 @@
 import pandas as pd
+import sys
 
-ORIG_DIR = "./data/00_original"
-PROC_DIR = "./data/01_process"
+ORIG_DIR, PROC_DIR = sys.argv[1:3]
 
 PT_PHON_FILE = f"{ORIG_DIR}/pt_words_phon.tsv"
 DATA_FILE = f"{PROC_DIR}/data_table.tsv"

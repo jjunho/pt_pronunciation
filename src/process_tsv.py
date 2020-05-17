@@ -8,9 +8,9 @@ from pathlib import Path
 from libs import hangul
 import re
 import os
+import sys
 
-IN_DIR = "data/00_original/tsv"
-OUT_DIR = "data/01_process"
+IN_DIR, OUT_DIR = sys.argv[1:3]
 
 if not os.path.exists(OUT_DIR):
     os.makedirs(OUT_DIR)

@@ -5,9 +5,9 @@ from pathlib import Path
 from glob import glob
 import os
 import pandas as pd
+import sys
 
-IN_DIR = "data/00_original/xlsx"
-OUT_DIR = "data/00_original/tsv"
+IN_DIR, OUT_DIR = sys.argv[1:3]
 
 
 if not os.path.exists(OUT_DIR):
