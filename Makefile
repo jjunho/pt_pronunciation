@@ -8,28 +8,31 @@ PD2D	= src/data2dataframe.py
 DDATA	= data
 DORIG	= $(DDATA)/0_original
 
+FXZIP   = $(DORIG)/xlsx.zip
 FALLT	= $(DDATA)/all.tsv
 FDATX	= $(DDATA)/data.xlsx
 FDATT	= $(DDATA)/data.tsv
 
-SXLS	= $(wildcard $(DORIG)/*.xlsx)
-STSV	= $(patsubst $(DORIG)/%.xlsx,$(DDATA)/%.tsv,$(SXLS))
-PTSV	= $(patsubst $(DORIG)/%.xlsx,$(DDATA)/%.ptsv,$(SXLS))
+SXLS	= $(wildcard $(DORIG)/xlsx/*.xlsx)
+STSV	= $(patsubst $(DORIG)/xlsx/%.xlsx,$(DDATA)/%.tsv,$(SXLS))
+PTSV	= $(patsubst $(DORIG)/xlsx/%.xlsx,$(DDATA)/%.ptsv,$(SXLS))
 
-build: .venv $(FDATX)
+data: $(FDATX)
+
+init: .venv
+	cd $(DORIG); unzip xlsx; cd -
 
 $(FDATX): $(FALLT) $(PD2D)
-	rm -rf $(PTSV)
 	$(PY) $(PD2D) $(FALLT) $(DDATA)
 
 $(FALLT): $(PTSV)
 	cat $(PTSV) > $(FALLT) 
 
-$(DDATA)/%.ptsv: $(DDATA)/%.tsv $(PT2D)
+$(DDATA)/%.ptsv: $(STSV) $(PT2D)
 	$(PY) $(PT2D) $< > $@
 
 $(DDATA)/%.tsv: $(PX2T)
-	$(PY) $(PX2T) $(DORIG)/$*.xlsx $@
+	$(PY) $(PX2T) $(DORIG)/xlsx/$*.xlsx $@
 
 .venv:
 	python -m venv .venv
@@ -41,3 +44,7 @@ clean:
 	rm -rf $(FDATX)
 	rm -rf $(PTSV)
 	rm -rf $(FALLT)
+
+clean-all: clean
+	rm -rf $(DORIG)/xlsx
+	rm -rf .venv

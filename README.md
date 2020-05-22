@@ -1,42 +1,22 @@
 # pt_pronunciation
 Research about Korean learners' acquisition of Portuguese pronunciation
 
-## Make a virtual environment
+## Initialize the virtual environment
 
 ```bash
-python3 -m venv venv
+make init
 ```
 
-## Activate the virtual environment
+## Make the data file
 
 ```bash
-source venv/bin/activate
+make data
 ```
 
-## Install requirements
+or just
 
 ```bash
-pip install -r requirements.txt
+make
 ```
 
-## Run the automated bash script
-
-```bash
-bash run.sh
-```
-
-## Start the Jupyter Notebook
-
-```bash
-jupyter notebook --notebook-dir=src
-```
-
-## All in one
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-bash run.sh
-jupyter notebook --notebook-dir=src
-```
+The data file will be in `data/all.tsv` and `data/all.xlsx`.
