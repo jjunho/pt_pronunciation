@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#! .venv/bin/python3
 # coding: utf-8
 
 def __make_translit_dicts():
@@ -7,7 +7,7 @@ def __make_translit_dicts():
     YALE_JONGSEONG = ". k kk ks n nc nh t l lk lm lp ls lth lph lh m p ps s ss ng c ch kh th ph h"
     IPA_CHOSEONG = "k k͈ n t t͈ l m p p͈ s s͈ . tɕ tɕ͈ tɕʰ kʰ tʰ pʰ h"
     IPA_JUNGSEONG = "a æ ja jæ ʌ ɛ jʌ jɛ o wa wæ wɛ jo u wʌ ø ʏ ju ɯ ɯj i"
-    IPA_JONGSEONG = ". k k͈ ks n ntɕ nh t l lk lm lp ls ltʰ lpʰ lh m p ps s s͈ ng tɕ tɕʰ kʰ tʰ pʰ h"
+    IPA_JONGSEONG = ". k k͈ ks n ntɕ nh t l lk lm lp ls ltʰ lpʰ lh m p ps s s͈ ŋ tɕ tɕʰ kʰ tʰ pʰ h"
 
     def make_syllables(chos, jungs, jongs):
         return [
@@ -26,6 +26,7 @@ def __make_translit_dicts():
         dict(zip(HAN_SYLLABLES, IPA_SYLLABLES))
     )
 
+LOMACA, PHONOLOGY = __make_translit_dicts()
 
 def __transliterate(hangul_word, translit_dict):
     return ".".join(translit_dict.get(char, char) for char in hangul_word)
@@ -39,4 +40,3 @@ def ipa(hangul_word):
     return __transliterate(hangul_word, PHONOLOGY)
 
 
-LOMACA, PHONOLOGY = __make_translit_dicts()

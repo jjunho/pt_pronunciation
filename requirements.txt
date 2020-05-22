@@ -1,5 +1,5 @@
 pandas
 matplotlib
+jupyter
 xlrd
 openpyxl
-jupyter
