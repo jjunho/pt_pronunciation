@@ -28,10 +28,10 @@ def make_table(tsv_file):
         return words
 
     pos_words = enumerate(words_from(tsv_file))
-    name = Path(tsv_file).stem
+    student = Path(tsv_file).stem
     for pos, words in pos_words:
         for word in words:
-            yield [name, PT_WORDS[pos], clean.sub('', word), hangul.yale(word), hangul.ipa(word)]
+            yield [student, PT_WORDS[pos], clean.sub('', word), hangul.yale(word), hangul.ipa(word)]
 
 
 data = "\n".join("\t".join(line) for line in reduce(add, [[*make_table(IN)]]))

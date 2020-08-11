@@ -1,0 +1,159 @@
+#! /bin/env python3
+
+from glob import glob
+import os
+
+DVENV = ".venv"
+DDATA = "data"
+DORIG = f"{DDATA}/original"
+DTSV = f"{DDATA}/tsv"
+DTEMP = f"{DDATA}/tmp"
+DXLSX = f"{DORIG}/xlsx"
+
+FALLT = f"{DTSV}/all.tsv"
+FDATT = f"{DDATA}/data.tsv"
+FDATX = f"{DDATA}/data.xlsx"
+
+PY = f"{DVENV}/bin/python"
+PIP = f"{DVENV}/bin/pip"
+
+PX2T = f"src/xlsx2tsv.py"
+PT2D = f"src/tsv2data.py"
+PD2D = f"src/data2dataframe.py"
+
+
+def SXLS(): return sorted(glob(f"{DORIG}/xlsx/*.xlsx"))
+def STMP(): return sorted(glob(f"{DTEMP}/*.tmp"))
+def STSV(): return sorted(glob(f"{DTSV}/*.tsv"))
+
+
+def create_dir(d):
+    os.system(f"mkdir -p {d}")
+
+
+def rename_ext(f, new):
+    name, _ = os.path.splitext(f)
+    return f"{name}.{new}"
+
+
+def rename_dir(f, old, new):
+    return f.replace(f"/{DORIG}/", f"/{DDATA}/")
+
+
+def remove(x):
+    os.system(f"rm -rf {x}")
+
+
+def get_filename(f):
+    return os.path.split(f)[-1]
+
+
+def main():
+    init()
+    data()
+
+
+def init():
+    create_venv()
+
+
+def data():
+    populate_xlsx()
+    create_dir(DTSV)
+    create_dir(DTEMP)
+    read_xlsx(SXLS(), DTEMP)
+    convert_df(STMP(), DTSV)
+    mk_data(STSV(), FALLT)
+    mk_df(FALLT, DDATA)
+    remove(DTEMP)
+    remove(DXLSX)
+
+
+def clean():
+    for x in [DTSV, FALLT, FDATT, FDATX]:
+        remove(x)
+
+
+def clean_all():
+    clean()
+    remove(DVENV)
+
+
+def create_venv():
+    os.system(f"python -m venv {DVENV}")
+    os.system(f"{PIP} install -U pip")
+    os.system(f"{PIP} install -U -r requirements.txt")
+
+
+def populate_xlsx():
+    os.system(f"cd {DORIG}; unzip xlsx; cd -")
+
+
+def get_outfile(infile, outdir, ext):
+    _, filename = os.path.split(infile)
+    new_filename = rename_ext(filename, ext)
+    return f"{outdir}/{new_filename}"
+
+
+def read_xlsx(infiles, outdir):
+    for infile in infiles:
+        outfile = get_outfile(infile, outdir, "tmp")
+        os.system(f"{PY} {PX2T} {infile} {outfile}")
+
+
+def convert_df(infiles, outdir):
+    for infile in infiles:
+        outfile = get_outfile(infile, outdir, "tsv")
+        os.system(f"{PY} {PT2D} {infile} > {outfile}")
+
+
+def mk_data(infiles, outfile):
+    for infile in infiles:
+        os.system(f"cat {infile} >> {outfile}")
+
+
+def mk_df(infile, outdir):
+    os.system(f"{PY} {PD2D} {infile} {outdir}")
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(
+        description='makepy: A script to build "Korean learners\' acquisition of Portuguese pronunciation" research data')
+    parser.add_argument(
+        '--all',
+        action="store_true",
+        help='initializes python environment and builds all data'
+    )
+    parser.add_argument(
+        '--init',
+        action="store_true",
+        help='initializes python environment'
+    )
+    parser.add_argument(
+        '--data',
+        action="store_true",
+        help='builds all data'
+    )
+    parser.add_argument(
+        '--clean',
+        action="store_true",
+        help='cleans only built data'
+    )
+    parser.add_argument(
+        '--clean-all',
+        action="store_true",
+        help='cleans all data and python environment'
+    )
+    args = parser.parse_args()
+
+    if args.all:
+        main()
+    if args.init:
+        init()
+    if args.data:
+        data()
+    if args.clean:
+        clean()
+    if args.clean_all:
+        clean_all()
