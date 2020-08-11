@@ -36,16 +36,8 @@ def rename_ext(f, new):
     return f"{name}.{new}"
 
 
-def rename_dir(f, old, new):
-    return f.replace(f"/{DORIG}/", f"/{DDATA}/")
-
-
 def remove(x):
     os.system(f"rm -rf {x}")
-
-
-def get_filename(f):
-    return os.path.split(f)[-1]
 
 
 def main():
@@ -118,6 +110,7 @@ def mk_df(infile, outdir):
 
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser(
         description='makepy: A script to build "Korean learners\' acquisition of Portuguese pronunciation" research data')
     parser.add_argument(
