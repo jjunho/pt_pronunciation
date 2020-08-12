@@ -1,5 +1,7 @@
 pandas
 matplotlib
+notebook==5.7.8
 jupyter
 xlrd
 openpyxl
+jupyter_contrib_nbextensions

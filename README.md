@@ -1,30 +1,32 @@
 # pt_pronunciation
-Research about Korean learners' acquisition of Portuguese pronunciation
 
-## Build script help
+Data about Korean learners' acquisition of Portuguese pronunciation
 
-```bash
-python3 makepy -h
-```
+Copyright © 2020 Juliano Paiva Junho
 
-```
-usage: makepy [-h] [--all] [--init] [--data] [--clean] [--clean-all]
+The data in this repository is available under the terms written in the file `LICENSE`.
 
-makepy: A script to build the research data
+## Basic requirements
 
-optional arguments:
-  -h, --help   show this help message and exit
-  --all        initializes python environment and builds all data
-  --init       initializes python environment
-  --data       builds all data
-  --clean      cleans only built data
-  --clean-all  cleans all data and python environment
-```
+You need `python3` and `make` in order to build the data file used in this research.
 
-## Make the data file
+## Initialize the virtual environment
 
 ```bash
-python3 makepy --all
+make init
 ```
 
-The data file will be in `data/all.tsv` and `data/all.xlsx`.
+## Unzip the xlsx data and make the data file
+
+```bash
+make xlsx
+make
+```
+
+After `make`ing the data, you can clean the directory.
+
+```bash
+make clean
+```
+
+The data file will be in `data/data.tsv` and `data/data.xlsx`.

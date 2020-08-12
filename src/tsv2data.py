@@ -8,7 +8,7 @@ from pathlib import Path
 from functools import reduce
 from operator import add
 
-IN = sys.argv[1]
+infile = sys.argv[1]
 
 clean = re.compile(r'\.\(\..*$')
 
@@ -28,12 +28,18 @@ def make_table(tsv_file):
         return words
 
     pos_words = enumerate(words_from(tsv_file))
-    student = Path(tsv_file).stem
+    name = Path(tsv_file).stem
     for pos, words in pos_words:
         for word in words:
-            yield [student, PT_WORDS[pos], clean.sub('', word), hangul.yale(word), hangul.ipa(word)]
+            if " " in word:
+                continue
+            word = clean.sub('', word)
+            yale = clean.sub('', hangul.yale(word))
+            hipa = clean.sub('', hangul.ipa(word))
+            yield [name, PT_WORDS[pos], word, yale, hipa]
 
 
-data = "\n".join("\t".join(line) for line in reduce(add, [[*make_table(IN)]]))
+data = "\n".join("\t".join(line)
+                 for line in reduce(add, [[*make_table(infile)]]))
 
 print(data)
