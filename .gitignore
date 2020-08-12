@@ -138,6 +138,4 @@ VSCODE
 Project
 ######
 
-data/00_original/data_table.tsv
-data/01_process/*
-*.xlsx
+data/
