@@ -8,8 +8,7 @@ from pathlib import Path
 from functools import reduce
 from operator import add
 
-IN = sys.argv[1]
-OUT = sys.argv[2]
+infile = sys.argv[1]
 
 clean = re.compile(r'\.\(\..*$')
 
@@ -40,6 +39,7 @@ def make_table(tsv_file):
             yield [name, PT_WORDS[pos], word, yale, hipa]
 
 
-data = "\n".join("\t".join(line) for line in reduce(add, [[*make_table(IN)]]))
+data = "\n".join("\t".join(line)
+                 for line in reduce(add, [[*make_table(infile)]]))
 
-open(OUT, "w").write(data)
+print(data)
