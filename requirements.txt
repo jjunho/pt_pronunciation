@@ -1,6 +1,6 @@
 pandas
 matplotlib
-notebook==5.7.8
+notebook
 jupyter
 xlrd
 openpyxl
